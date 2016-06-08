@@ -9,12 +9,17 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
     
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     var pokemon = [Pokemon]()
+    var filtrowanePokemony = [Pokemon]()
+    var trybWyszukiwania = false
+    
     var music: AVAudioPlayer!
     
     override func viewDidLoad() {
@@ -22,6 +27,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         collection.delegate = self
         collection.dataSource = self
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.Done
         
         wlaczMuzyke()
         parsowaniePokemonCSV()
@@ -65,15 +72,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 718
+        if trybWyszukiwania{
+            return filtrowanePokemony.count
+        }else {
+        return pokemon.count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let komorka = collectionView.dequeueReusableCellWithReuseIdentifier("pokemonCell", forIndexPath: indexPath) as? pokemonCell{
+
+            let poke: Pokemon!
             
-            var poke = pokemon[indexPath.row]
+            if trybWyszukiwania {
+                poke = filtrowanePokemony[indexPath.row]
+            }else{
+                poke = pokemon[indexPath.row]
+            }
+            
             komorka.skonfigurujKomorke(poke)
-            
             return komorka
         }else{
             return UICollectionViewCell()
@@ -95,9 +112,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             sender.alpha = 0.2
         }else {
             music.play()
-            sender.alpha = 0.1
+            sender.alpha = 1.0
         }
     }
     
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            trybWyszukiwania = false
+            view.endEditing(true)
+            collection.reloadData()
+        }else{
+            trybWyszukiwania = true
+            let maleLitery = searchBar.text!.lowercaseString
+            filtrowanePokemony = pokemon.filter({$0.imie.rangeOfString(maleLitery) != nil})
+            collection.reloadData()
+        }
+    }
 }
 
