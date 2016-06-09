@@ -6,10 +6,8 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Pokemon Hollow.ttf">
-            <string>PokemonHollowNormal</string>
-        </mutableArray>
         <mutableArray key="Pokemon Solid.ttf">
+            <string>PokemonSolidNormal</string>
             <string>PokemonSolidNormal</string>
         </mutableArray>
     </customFonts>
@@ -44,12 +42,12 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokedex" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTs-eK-E4o">
-                                        <rect key="frame" x="222" y="11" width="156" height="56"/>
+                                        <rect key="frame" x="209" y="5" width="183" height="67"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="156" id="MLp-Pr-9e4"/>
-                                            <constraint firstAttribute="height" constant="56" id="XVd-Al-K39"/>
+                                            <constraint firstAttribute="width" constant="183" id="MLp-Pr-9e4"/>
+                                            <constraint firstAttribute="height" constant="67" id="XVd-Al-K39"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="35"/>
+                                        <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="44"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -57,7 +55,7 @@
                                 <color key="backgroundColor" red="1" green="0.6430681586391509" blue="0.13468059123510179" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="ihe-Vk-S0y" firstAttribute="centerY" secondItem="LSY-3G-3KU" secondAttribute="centerY" id="2Kx-Jp-aWp"/>
-                                    <constraint firstItem="gTs-eK-E4o" firstAttribute="top" secondItem="LSY-3G-3KU" secondAttribute="top" constant="11" id="Fuq-JK-zPL"/>
+                                    <constraint firstItem="gTs-eK-E4o" firstAttribute="top" secondItem="LSY-3G-3KU" secondAttribute="top" constant="5" id="Fuq-JK-zPL"/>
                                     <constraint firstItem="gTs-eK-E4o" firstAttribute="centerY" secondItem="LSY-3G-3KU" secondAttribute="centerY" id="VD7-6W-s2c"/>
                                     <constraint firstAttribute="trailing" secondItem="ihe-Vk-S0y" secondAttribute="trailing" constant="8" id="jpB-Kw-GDI"/>
                                     <constraint firstItem="gTs-eK-E4o" firstAttribute="centerX" secondItem="LSY-3G-3KU" secondAttribute="centerX" id="sG5-FR-mh3"/>
@@ -173,7 +171,7 @@
                                             <constraint firstAttribute="width" constant="155" id="Dl6-ZD-xXO"/>
                                             <constraint firstAttribute="height" constant="49" id="alJ-Yw-3VX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="PokemonHollowNormal" family="Pokemon Hollow" pointSize="27"/>
+                                        <fontDescription key="fontDescription" name="PokemonSolidNormal" family="Pokemon Solid" pointSize="30"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -184,6 +182,9 @@
                                             <constraint firstAttribute="width" constant="24" id="sRh-qC-eBZ"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="icon_arrow_left"/>
+                                        <connections>
+                                            <action selector="przyciskPowrotu:" destination="amw-me-bdF" eventType="touchUpInside" id="9Xh-fJ-ccY"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.64306815859999999" blue="0.1346805912" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,6 +253,10 @@
                                             <segment title="Ataki"/>
                                         </segments>
                                         <color key="tintColor" red="1" green="0.64306815859999999" blue="0.1346805912" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="atakiPokemonaSgmnt:" destination="amw-me-bdF" eventType="valueChanged" id="MjX-2d-dSc"/>
+                                            <action selector="charakterystykaPokemonaSgmnt:" destination="amw-me-bdF" eventType="valueChanged" id="uZY-Kg-0gb"/>
+                                        </connections>
                                     </segmentedControl>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="571" translatesAutoresizingMaskIntoConstraints="NO" id="oF3-Ju-VOZ">
                                         <rect key="frame" x="205" y="43" width="150" height="150"/>
@@ -443,7 +448,17 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="drugaEwolucja" destination="PFo-m5-79O" id="ZLM-9a-1OR"/>
                         <outlet property="nazwaPokemona" destination="1hd-cs-Pik" id="Hxc-Eu-UKg"/>
+                        <outlet property="obrazekPokemona" destination="oF3-Ju-VOZ" id="rms-sE-8LX"/>
+                        <outlet property="obronaPokemona" destination="sHI-Hz-c1e" id="oU0-Ee-Gfi"/>
+                        <outlet property="pierwszaEwolucja" destination="Fsg-O8-YVL" id="wwh-ph-VT9"/>
+                        <outlet property="podstawowyAtak" destination="uoU-1W-x3I" id="8Xb-r5-tZk"/>
+                        <outlet property="pokedexID" destination="Xcd-0S-Fp8" id="OUx-26-SeA"/>
+                        <outlet property="tekstEwolucji" destination="hyt-6X-GLl" id="9xN-hW-I4A"/>
+                        <outlet property="typPokemona" destination="BgA-AA-3Rk" id="iI9-Dm-T8u"/>
+                        <outlet property="wagaPokemona" destination="z0H-jU-pMh" id="CXS-MY-SUI"/>
+                        <outlet property="wysokoscPokemona" destination="73Z-kZ-Nvt" id="FUR-Di-hjU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjt-jJ-b13" userLabel="First Responder" sceneMemberID="firstResponder"/>

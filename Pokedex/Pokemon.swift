@@ -10,6 +10,12 @@ import Foundation
 class Pokemon {
     private var _imie: String!
     private var _pokedexId: Int!
+    private var _typ: String!
+    private var _obrona: String!
+    private var _wysokosc: String!
+    private var _waga: String!
+    private var _podstawowyAtak: String!
+    private var _nastepnaEwolucjaTekst: String!
     
     var imie:String{
         return _imie
