@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var filtrowanePokemony = [Pokemon]()
     var trybWyszukiwania = false
     
-    var music: AVAudioPlayer!
+    var muzyka: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +38,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let sciezka = NSBundle.mainBundle().pathForResource("music", ofType: "mp3")!
         
         do{
-            music = try AVAudioPlayer(contentsOfURL: NSURL(string: sciezka)!)
-            music.prepareToPlay()
-            music.numberOfLoops = -1
-            music.play()
+            muzyka = try AVAudioPlayer(contentsOfURL: NSURL(string: sciezka)!)
+            muzyka.prepareToPlay()
+            muzyka.numberOfLoops = -1
+            muzyka.play()
             
         }catch let err as NSError {
             print(err.debugDescription)
@@ -68,6 +68,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let poke: Pokemon!
+        
+        if trybWyszukiwania {
+            poke = filtrowanePokemony[indexPath.row]
+        }else{
+            poke = pokemon[indexPath.row]
+        }
+        
+        performSegueWithIdentifier("szczegolyPokemonaVC", sender: poke) //sender to obiekt który chcemy wysłać
     
     }
     
@@ -107,11 +116,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func przyciskMuzyki(sender: UIButton!) {
         
-        if music.playing {
-            music.stop()
+        if muzyka.playing {
+            muzyka.stop()
             sender.alpha = 0.2
         }else {
-            music.play()
+            muzyka.play()
             sender.alpha = 1.0
         }
     }
@@ -131,6 +140,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let maleLitery = searchBar.text!.lowercaseString
             filtrowanePokemony = pokemon.filter({$0.imie.rangeOfString(maleLitery) != nil})
             collection.reloadData()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "szczegolyPokemonaVC" { //jeżeli używamy tego konkretnego segueya
+            if let szczegolyVC = segue.destinationViewController as? szczegolyPokemonaVC{//to wtedy złapmy ten kontroller do którego będziemy iść, zamieniamy go na klase szczegolypokemonavc poniewaz dziedziczy z uiviewcontr
+                if let poke = sender as? Pokemon{//potem jeżeli nasz wysyłany obiket ma nazwe poke a ma wyżej to wtedy
+                    szczegolyVC.pokemon = poke//tutaj nasz szczegolyVC to ten kontroller do ktorego sie odnosimy a my w tamtej klasie zainicjowalismy zmienna pokemon ktora bedzie przechowywac nasz obiekt poke jak wysłannik, spoko
+                    
+                }
+            }
         }
     }
 }
