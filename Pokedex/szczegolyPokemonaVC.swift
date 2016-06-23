@@ -28,10 +28,40 @@ class szczegolyPokemonaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let img = UIImage(named: "\(self.pokemon.pokedexId)")
         nazwaPokemona.text = pokemon.imie.capitalizedString
+        obrazekPokemona.image = img
+        pierwszaEwolucja.image = img
+        pokedexID.text = "\(pokemon.pokedexId)"
+        
+        pokemon.sciagnijSzczegolyPokemonow({  //kod który będzie tutaj wykona się dopiero po ściągniecie przez nas danych, czyli cech char dla pokow itp
+            () -> () in
+            //this will be called after download is done
+            self.aktualizujDane()
+            })
     }
 
+    func aktualizujDane(){
+        typPokemona.text = pokemon.typ
+//        typPokemona.changeColor();
+        wysokoscPokemona.text = pokemon.wysokość
+        podstawowyAtak.text = pokemon.podstawowyAtak
+        wagaPokemona.text = pokemon.waga
+        obronaPokemona.text = pokemon.obrona
+        
+        if pokemon.następnaEwolucjaTekst == ""
+        {
+            tekstEwolucji.text = "Nie ma kolejnej ewolucji"
+            drugaEwolucja.hidden = true
+        }
+        else
+        {
+            drugaEwolucja.image = UIImage(named: "\(pokemon.następnaEwolucjaId)")
+            drugaEwolucja.hidden = false
+            tekstEwolucji.text = "Następna ewolucja: \(pokemon.następnaEwolucjaTekst)"
+        }
+    }
     
     @IBAction func przyciskPowrotu(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
